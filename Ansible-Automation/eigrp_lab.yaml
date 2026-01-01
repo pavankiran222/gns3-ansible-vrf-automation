@@ -1,0 +1,27 @@
+---
+- name: Configure routers for EIGRP lab
+  hosts: routers
+  gather_facts: no
+  tasks:
+    - name: Configure data interface to peer
+      ios_config:
+        parents: interface GigabitEthernet4/0
+        lines:
+          - ip address {{ data_ip }} 255.255.255.0
+          - no shutdown
+          - description LINK-TO-PEER
+      vars:
+        data_ip: "{{ '10.0.0.1' if inventory_hostname == 'R1' else '10.0.0.2' }}"
+
+    - name: Configure EIGRP AS 100
+      ios_config:
+        parents: router eigrp 100
+        lines:
+          - network 192.168.0.0 0.0.0.255
+          - network 10.0.0.0 0.0.0.255
+          - no auto-summary
+
+    - name: Save config
+      ios_command:
+        commands:
+          - write memory
