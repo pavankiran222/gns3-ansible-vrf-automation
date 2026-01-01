@@ -21,25 +21,27 @@ The lab demonstrates real-world multi-tenancy while handling older IOS limitatio
 - Management Switch (for Ansible appliance)
 - Trunk Switch (Ethernet switch between R1/R2 GigabitEthernet4/0)
 
-![Topology Example](<img width="354" height="395" alt="gns3-ansible-vrf-lite-lab" src="https://github.com/user-attachments/assets/15352f76-f2ae-4358-9699-a916306a6997" />)
+ <img width="354" height="395" alt="gns3-ansible-vrf-lite-lab" src="https://github.com/user-attachments/assets/5ac07019-1671-4514-9707-b3a1e36f887e" />
+
+ 
 
 ## Ansible Playbook
+
 See `static_vrf.yaml` for the complete automated configuration.
 
 ## Verification
 - `show ip vrf` lists VRFs and interfaces
 - `show ip route vrf RED` shows separate routing table
-- Ping succeeds in same VRF, fails cross-VRF
+- `ping vrf RED 1.1.1.1` & `ping vrf RED 2.2.2.2` Ping succeeds in same VRF, fails cross-VRF (Isolation)
 
-![show vrf output](<img width="628" height="171" alt="show_ip_vrf" src="https://github.com/user-attachments/assets/6d7ebb0b-bc30-4b2f-a25a-6a0b7c809877" />  
-![show ip route vrf RED](<img width="724" height="405" alt="show_ip_route_vrf_RED" src="https://github.com/user-attachments/assets/67a974d9-9623-4e06-9bc5-970c40387a24" />)  
-![Ping success in same VRF and failure if different VRF](<img width="629" height="203" alt="pings" src="https://github.com/user-attachments/assets/be4d3059-e6b7-41dc-9d94-4a0d5b7d806c" />)  
+[show vrf output]  
 
-## Lessons Learned
-- Use classic `ip vrf` + `ip vrf forwarding` on older IOS for active RIBs.
-- Validate with `--check --diff` before running.
-- Static routes are reliable for VRF-Lite on legacy platforms.
+<img width="628" height="171" alt="show_ip_vrf" src="https://github.com/user-attachments/assets/19763f60-00a2-46bd-8ee3-54fbda506054" />
 
-Fork and extend — add more tenants or integrate with Python/Nornir!
+[show ip route vrf RED]
 
-#NetworkAutomation #Ansible #GNS3 #Cisco #VRFLite #DevNet
+<img width="724" height="405" alt="show_ip_route_vrf_RED" src="https://github.com/user-attachments/assets/086c1388-596b-4c08-a264-245bdf396fbf" />
+
+[Ping success in same VRF and failure if different VRF]  
+
+<img width="629" height="203" alt="pings" src="https://github.com/user-attachments/assets/b36052f3-75eb-43e2-9760-42ed9c82b6a5" />
